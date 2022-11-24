@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useReducer, useContext } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
+import AuthContext from "../Context/auth_context";
 
 const emailReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
@@ -14,6 +15,8 @@ const emailReducer = (state, action) => {
 
   return { value: "", isValid: false };
 };
+
+
 
 const passwordReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
@@ -44,6 +47,7 @@ const Login = (props) => {
 const {isValid: emailIsValidate} = emailState;
 const {isValid: passwordIsValid} = passwordState;
 
+const autoCtx = useContext(AuthContext);
     useEffect(()=>{
   //usetime out to wait execution a littile longer not to execute with every key stroke
 
@@ -86,7 +90,7 @@ const {isValid: passwordIsValid} = passwordState;
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, passwordState.value);
+    autoCtx.onLogin(emailState.value, passwordState.value);
   };
 
   return (
